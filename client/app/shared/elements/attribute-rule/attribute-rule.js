@@ -52,13 +52,18 @@ Polymer({
 		}
 	},
 	updateRule: function(){
-		console.log(this.updateAttributeLimit);
 		this.attributeLimit = this.updateAttributeLimit;
 	},
 	_handleTapMinus: function() {
 		this.updateAttributeLimit-=1;
+		if (this.updateAttributeLimit < 0){
+			this.updateAttributeLimit = 0;
+		}
 	},
 	_handleTapSum: function() {
-		this.updateAttributeLimit+=1;
+		if (!this.updateAttributeLimit){
+			this.updateAttributeLimit = 0;
+		}
+		this.updateAttributeLimit = parseInt(this.updateAttributeLimit) + 1;
 	}
 });

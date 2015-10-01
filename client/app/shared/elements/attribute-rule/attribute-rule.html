@@ -132,7 +132,7 @@
 
 					<span>is greater than</span>
 					<div class="input-spinner-container">
-						<input type="number" min="0" max=99 is="iron-input" class="short-input" bind-value="{{updateAttributeLimit}}">
+						<input type="text" is="iron-input" pattern="\d*" maxlength="2" class="short-input" bind-value="{{updateAttributeLimit}}">
 						<div class="spinner-container">
 				      <button class="btn border-left-top" on-tap="_handleTapSum" type="button"><div class="arrow-up"></div></button>
 				      <button class="btn border-left-bottom" on-tap="_handleTapMinus" type="button"><div class="arrow-up arrow-down"></div></button>
