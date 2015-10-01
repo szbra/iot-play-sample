@@ -1,2 +1,2 @@
 # iot-play-sample
-Sample for the IoT Playground
+Sample for the IoT Play - Try - Buy page
