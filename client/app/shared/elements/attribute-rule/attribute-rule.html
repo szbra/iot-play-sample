@@ -1,0 +1,150 @@
+<link rel="import" href="../../../../js/lib/iron-autogrow-textarea/iron-autogrow-textarea.html" />
+<link rel="import" href="../../../../js/lib/iron-icons/hardware-icons.html" />
+<link rel="import" href="../../../../js/lib/iron-icon/iron-icon.html" />
+
+<link rel="import" href="../../../../js/lib/paper-checkbox/paper-checkbox.html" />
+<link rel="import" href="../../../../js/lib/paper-icon-button/paper-icon-button.html" />
+<link rel="import" href="../../../../js/lib/iron-input/iron-input.html" />
+<link rel="import" href="../../../../js/lib/paper-slider/paper-slider.html" />
+<link rel="import" href="../../../../js/lib/paper-tabs/paper-tabs.html" />
+<link rel="import" href="../../../../js/lib/paper-menu/paper-menu.html" />
+<link rel="import" href="../../../../js/lib/paper-item/paper-item.html" />
+
+
+<dom-module id='attribute-rule'>
+
+	<style>
+		span, h4, #alert-rule{
+			font-size: 18px;
+		}
+		span, #alert-rule{
+			color: #601146;
+		}
+		.h4-color{
+			color: #000;
+		}
+		.list-data{
+			list-style-type: none;
+		}
+		.alert-message, .rules-message{
+			background: url("../../../../assets/img/play-warning-icon.svg") 0px 0px no-repeat transparent;
+			background-repeat: no-repeat;
+			background-size: 41px;
+			height: 50px;
+  		line-height: 50px;
+    	padding-top: 12px;
+    	padding-bottom: 12px;
+			padding-left: 60px;
+		}
+		.ok{
+			background: url("../../../../assets/img/play-ok-icon.svg") 0px 0px no-repeat transparent;
+			background-size: 40px;
+		}
+		.rules-message{
+			background: url("../../../../assets/img/play-smartphone-icon.svg") 12px 0px no-repeat transparent;
+    	background-size: 34px;
+    	padding-top: 18px;
+    	padding-bottom: 19px;
+		}
+		.rules-panel{
+    		margin-top: 17px;
+		}
+		.update-panel{
+			border-left: 1px solid #CECECE;
+    	display: inline-block;
+    	margin-left: 27px;
+    	padding-left: 20px;
+		}
+		.update-message{
+	    	float: right;
+			font-size: 16px;
+	    	padding-top: 9px;
+	    	padding-left: 5px;
+		}
+		.input-spinner-container{
+			display:inline-block;
+    	margin-left: 7px;
+		}
+		.input-spinner-container .short-input{
+			display: inline-block;
+			font-size:18px;
+			color: #601146;
+			width: 70px;
+    	border: none;
+			background: bottom left linear-gradient(#7c1b57, #7c1b57) no-repeat, bottom center linear-gradient(#7c1b57, #7c1b57) repeat-x, bottom right linear-gradient(#7c1b57, #7c1b57) no-repeat,top left linear-gradient(#CECECE, #CECECE) no-repeat, top center linear-gradient(#CECECE, #CECECE) repeat-x, top right linear-gradient(#CECECE, #CECECE) no-repeat;
+			background-size: 2px 16px, 2px 2px, 2px 16px;
+    	padding-top: 3px;
+			padding-bottom: 4px;
+			padding-right: 3px;
+			padding-left: 7px;
+		}
+		.spinner-container .arrow-up{
+			width: 0;
+			height: 0;
+		  margin: auto;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			border-bottom: 5px solid #601146;
+		}
+		.spinner-container .arrow-down{
+			border-top: 5px solid #601146;
+			border-bottom: none;
+		}
+		.spinner-container {
+			display: inline-table;
+		  position: relative;
+	    vertical-align: top;
+    	margin-left: -30px;
+		}
+		.spinner-container .btn {
+		  float: none;
+		  position: relative;
+		  width: 100%;
+		  padding: 4px 0px;
+		  background-color: #FFF;
+		  border-radius: 0;
+			border: 2px solid #CECECE;;
+			border-left: none;
+		}
+		.spinner-container .btn:first-child {
+		  margin-bottom: -2px;
+		}
+		.spinner-container .border-left-top{
+			border-left: 2px solid #CECECE;
+		}
+		.spinner-container .border-left-bottom{
+			border-left: 2px solid #601146;
+		}
+	</style>
+	<template>
+		<ul class='list-data'>
+			<li>
+				<h4>Shake your phone until <span class="h4-color">{{attribute}}</span> exceeds <span class="h4-color">{{attributeLimit}}</span></h4>
+      			<span hidden$="{{!triggerWarning}}" class="alert-message">Too much&nbsp;<span>{{attribute}}</span></span>
+      			<span hidden$="{{triggerWarning}}" class="alert-message ok">You're within your <span>{{attribute}}</span> limit</span>
+			</li>
+			<li>
+				<h4>Change the rule</h4>
+				<div class="rules-panel">
+					<span>Alert me if</span>
+
+					<span class="rules-message">{{attribute}}</span>
+
+					<span>is greater than</span>
+					<div class="input-spinner-container">
+						<input type="text" is="iron-input" pattern="\d*" maxlength="2" class="short-input" bind-value="{{updateAttributeLimit}}">
+						<div class="spinner-container">
+				      <button class="btn border-left-top" on-tap="_handleTapSum" type="button"><div class="arrow-up"></div></button>
+				      <button class="btn border-left-bottom" on-tap="_handleTapMinus" type="button"><div class="arrow-up arrow-down"></div></button>
+				    </div>
+					</div>
+					<div class="update-panel">
+						<paper-icon-button src="../../../../assets/img/play-update-icon.svg" on-tap="updateRule"></paper-icon-button>
+						<span class="update-message">Update rule</span>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</template>
+	<script src='attribute-rule.js'></script>
+</dom-module>

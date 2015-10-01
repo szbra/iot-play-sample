@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>IBM Internet of Things Foundation - Play</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <!-- css -->
+  <link rel="stylesheet" href="js/lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+
+  <!-- polymer -->
+  <script src="js/lib/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="js/lib/polymer/polymer.html">
+  <link rel="import" href="app/shared/elements/linechart/line-chart.html">
+  <link rel="import" href="app/shared/elements/livephone/live-phone.html">
+  <link rel="import" href="app/shared/elements/attribute-rule/attribute-rule.html">
+
+  <!-- js -->
+  <script src="js/lib/jquery/dist/jquery.min.js"></script>
+  <script src="js/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="js/lib/qrjs/qr.js"></script>
+  <script src="js/lib/qrcode-generator/js/qrcode.js"></script>
+
+  <!--webcomponents-->
+  <link rel="import" href="js/lib/qr-code/src/qr-code.html">
+
+</head>
+<body ng-app="iotmarket">
+
+  <div ng-include="'app/shared/navbar/navbarView.html'"></div>
+  <div class="main-content" ui-view></div>
+
+  <div class="directive-footer" ng-include="'app/components/play/footer/footerView.html'"></div>
+
+  <!-- build:js -->
+  <script src="js/bundle.js"></script>
+  <!-- endbuild -->
+
+</body>
+</html>

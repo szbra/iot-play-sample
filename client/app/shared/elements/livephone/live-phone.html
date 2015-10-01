@@ -1,0 +1,110 @@
+<script src="../../../../js/lib/three.js/build/three.min.js"></script>
+
+<dom-module name="live-phone">
+<template>
+	<style>
+	:host {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		height: 225px;
+		vertical-align: middle;
+		background: #aaaaaa;
+		opacity: 0.3;
+	}
+	</style>
+</template>
+<script>
+Polymer({
+	is: "live-phone",
+	properties: {
+		renderData: {
+			type: Object,
+			value: function() { return {}; },
+			observer: '_processRenderData'
+		}
+	},
+
+	/*
+	 Element lifecycle method
+	 `attached` fires once the element and its parents have been inserted
+	 into a document.
+
+	 This is a good place to perform any work related to your element's
+	 visual state or active behavior (measuring sizes, beginning animations,
+	 loading resources, etc).
+	 */
+	attached: function() {
+
+		this.element = this.root.host;
+		this.width = this.element.clientWidth;
+		this.height = this.element.clientHeight;
+		this.timeoutHandle = null;
+
+		this.renderer = new THREE.WebGLRenderer({alpha: true});
+		this.renderer.setSize(this.width, this.height);
+		this.renderer.setClearColor( 0xffffff, 0);
+		this.element.appendChild( this.renderer.domElement );
+
+		// camera
+		this.camera = new THREE.PerspectiveCamera(65, this.width / this.height, 1, 1000);
+		this.camera.position.z = 12;
+
+		// scene
+		this.scene = new THREE.Scene();
+
+		var loader = new THREE.ObjectLoader();
+		var me = this;
+		loader.load('assets/img/phone.json', function ( obj ) {
+			
+			// cube
+			me.cube = obj;
+
+			me.cube.overdraw = true;
+			me.cube.rotation.x = Math.PI * 0.1;
+			me.scene.add(me.cube);
+
+			// var ambientLight = new THREE.AmbientLight(0xffffff);
+			// me.scene.add(ambientLight);
+
+			// directional lighting
+			var directionalLight = new THREE.DirectionalLight(0xffffff);
+			directionalLight.position.set(0, 0, 1).normalize();
+			me.scene.add(directionalLight);
+
+			// initial rendering
+			me._render(200, 0, -125);
+		});							
+
+
+	},
+	_processRenderData: function(newValue) {
+		if(newValue && this.cube) {
+			this._render(newValue.ob, newValue.og, newValue.oa);
+		}
+	},
+	_render: function(_x, _y, _z) {
+		if(this.cube) {
+			this.cube.rotation.x = (_x-90) * Math.PI/180; // beta
+			this.cube.rotation.y = _y * Math.PI/180; // gamma
+			this.cube.rotation.z = (_z-90) * Math.PI/180; // alpha
+			this.renderer.render( this.scene, this.camera );
+
+			// clear "inactive detection" timeout
+			if(this.timeoutHandle) {
+				clearTimeout(this.timeoutHandle);
+				this.element.style.opacity = 1;
+			}
+
+			var me = this;
+
+			// set "inactive detection" timeout
+			this.timeoutHandle = setTimeout(function() {
+				me.element.style.opacity = 0.3;
+			}, 2000);
+		}
+	}
+
+});
+</script>
+</dom-module>

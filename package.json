@@ -1,0 +1,41 @@
+{
+  "name": "discover-iot",
+  "version": "0.0.1",
+  "description": "Sandbox for discover-try-buy IoT experience",
+   "scripts": {
+    "gulp": "gulp prod",
+    "start": "node app.js",
+    "postinstall": "npm run gulp"
+  },
+  "dependencies": {
+    "angular": "^1.4.5",
+    "angular-cookies": "^1.5.0-beta.0",
+    "angular-resource": "^1.5.0-beta.0",
+    "angular-qrcode": "^6.0.2",
+    "angular-ui-router": "^0.2.15",
+    "cfenv": "1.0.x",
+    "d3": "^3.5.6",
+    "express": "4.12.x",
+    "mqtt": "^1.4.1",
+    "request": "^2.64.0",
+    "three": "^0.71.1",
+    "bower": "^1.5.2",
+    "browserify": "^11.1.0",
+    "gulp": "^3.9.0",
+    "gulp-html-replace": "^1.5.1",
+    "gulp-install": "^0.5.0",
+    "gulp-jscs": "^1.6.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-less": "^3.0.3",
+    "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6",
+    "gulp-watch": "^4.3.5",
+    "path": "^0.12.7",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "repository": {},
+  "engines": {
+    "node": "0.12.x"
+  }
+}
