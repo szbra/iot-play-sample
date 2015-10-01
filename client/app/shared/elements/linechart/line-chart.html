@@ -1,0 +1,233 @@
+<script src="../../../../js/lib/d3/d3.min.js"></script>
+
+<dom-module name="line-chart">
+	<template>
+		<style>
+			:host {
+			  display: block;
+			  margin-left: auto;
+			  margin-right: auto;
+			  height: 225px;
+			  vertical-align: middle;
+			  opacity: 0.3;
+			}
+		</style>
+	</template>
+	<script>
+		Polymer({
+			is: "line-chart",
+			properties: {
+				metadata: {
+					type: Array,
+					value: function() { return []; },
+					observer: '_metadataReady'
+				},
+				minValue: {
+					type: Number,
+					value: -100
+				},
+				maxValue: {
+					type: Number,
+					value: 100
+				},
+				numberOfPoints: {
+					type: Number,
+					value: 100
+				},
+				renderData: {
+					type: Object,
+					value: function() { return {}; },
+					observer: '_processRenderData'
+				}
+			},
+
+			// Initialize chart variables (and performs the initial chart render if this.metadata was set before
+			// this method is executed)
+			attached: function() {
+
+		    	this.element = this.root.host;
+
+				this.margin = {
+					top: 30, 
+					right: 20, 
+					bottom: 30, 
+					left: 40
+				};
+
+				this.width = this.element.clientWidth - this.margin.left - this.margin.right;
+				this.height = this.element.clientHeight - this.margin.top - this.margin.bottom;
+
+				// Set the ranges
+				this.x = d3.time.scale().range([0, this.width]);
+				this.y = d3.scale.linear().range([this.height, 0]);
+				
+				// Define the axes
+				// var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(5).tickFormat("").outerTickSize(0).tickSize(0);
+				this.xAxis = d3.svg.axis().scale(this.x).orient("bottom").ticks(5).tickFormat("");
+
+				// var yAxis = d3.svg.axis().scale(y).orient("left").ticks(5).tickFormat("").tickSize(0);
+				this.yAxis = d3.svg.axis().scale(this.y).orient("left").ticks(5);
+
+				var me = this;
+
+				// Define the line
+				this.line = new d3.svg.line()
+					.x(function(d) { return me.x(d.x); })
+					.y(function(d) { return me.y(d.y); });
+
+				this.timeoutHandle = null;
+
+				// Covering the possibility of _metadataReady() being fired 
+				// before attached() is fired (can happen in Firefox and Safari)
+				// In such situation, _initChart() will not be executed by _metadataReady(), so we do it here.
+				if(this.metadata && (this.metadata.length > 0)) {
+	    			this._initChart(this.metadata);
+				}
+
+			},
+
+			// Initializes the chart lines based on metadata and do a first render
+		    _metadataReady: function(newValue) {
+				// Covering the possibility of _metadataReady() being fired 
+				// before attached() is fired (can happen in Firefox and Safari)
+				// In such situation, _initChart() will not be executed here, so we do it in attached() later.
+		    	if(this.element) {
+		    		if(newValue) {
+		    			this._initChart(newValue);
+		    		}
+		    	}
+		    },
+
+
+		    // Re-render the chart for every new data point that arrives 
+		    _processRenderData: function(newValue) {
+		    	if(newValue && this.metadata && (this.metadata.length > 0)) {
+		    		this._render(newValue);
+		    	}
+		    },
+
+		    // Initial chart rendering based on metadata (this method can only be executed once)
+		    _initChart: function(metadata) {
+		    	// Make sure this method is executed only once
+		    	if(!this.initChartExecuted) {
+					// Array of series data (in d3 format)
+					this.valuesSet = [];
+
+					// Do the initial padding
+					//for (var j in metadata) { Removed to Lint errors
+					for	(var a = 0; a < metadata.length; a=a+1){
+						 
+						var values = [];
+						
+						// Padding values until the valuesSet array is completelly filled
+						for (var i = 0; i < this.numberOfPoints; i=i+1) { 
+							values.push({ x: i, y: 0 }); 
+						}
+
+						this.valuesSet.push(values);
+					}
+
+					this.nextDataX = this.numberOfPoints;
+
+					this._render();
+
+					this.initChartExecuted = true;
+		    	}
+			},
+
+
+			_render: function(dataPoint) {
+
+				// Convert the dataPoint (raw data passed to the directive)
+				// into a point in the valuesSet (a format that d3 understands)
+				if(dataPoint) {
+					for (var j=0; j < this.metadata.length; j=j+1) {
+						
+						var field = this.metadata[j].field;
+						
+						var point = {
+							x: this.nextDataX,
+							y: (dataPoint[field] ? dataPoint[field] : 0)
+						};
+						this.nextDataX = this.nextDataX+1;
+
+						// Discard the last point
+						this.valuesSet[j].shift();
+						// Add the new point
+						this.valuesSet[j].push(point);
+					}
+				}
+
+			   	// remove all previous items before render
+				this.element.innerHTML = "";
+
+				if(this.valuesSet.length > 0) {
+
+					// Adds the svg canvas
+					var svg = d3.select(this.element)
+						.append("svg")
+							.attr("width", this.width + this.margin.left + this.margin.right)
+							.attr("height", this.height + this.margin.top + this.margin.bottom)
+						.append("g")
+							.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
+					// Scale the range of the data
+					this.x.domain(d3.extent(this.valuesSet[0], function(d) { return d.x; }));
+					this.y.domain([this.minValue, this.maxValue]);
+
+					// Add the paths.
+					// TODO: add more colors to support more lines
+					var colors = ["#1d3649", "#41d6c3", "#5596e6"];
+					for (var i = 0; i < this.valuesSet.length; i=i+1) {
+						svg.append("path")
+							.attr("stroke", colors[i])
+							.attr("stroke-width", 2)
+							.attr("fill", "none")
+							.attr("d", this.line(this.valuesSet[i]));
+					}
+
+					// Add the X Axis
+					svg.append("g")
+						.attr("class", "x axis")
+						.attr("transform", "translate(0," + this.height + ")")
+						.style({ 'stroke': 'black', 'fill': 'none', 'stroke-width': '1px'})
+						.call(this.xAxis);
+
+					// Add the Y Axis
+					svg.append("g")
+						.attr("class", "y axis")
+						.style({ 'stroke': 'black', 'fill': 'none', 'stroke-width': '1px'})
+						.call(this.yAxis);
+
+					// Add a key to the graph
+					for (var k = 0 ; k < this.valuesSet.length; k=k+1) {
+						svg.append("svg:rect")
+								.attr("x", this.width - 90)
+								.attr("y", 0 + k * 18)
+								.attr("stroke", colors[k])
+								.attr("height", 2)
+								.attr("width", 40);
+						svg.append("svg:text")
+								.attr("x", this.width - 40)
+								.attr("y", 5 + k * 18)
+								.text(this.metadata[k].name);
+					}	
+
+					// clear "inactive detection" timeout
+					if(this.timeoutHandle) {
+						clearTimeout(this.timeoutHandle);
+						this.element.style.opacity = 1;
+					}
+
+					var me = this;
+					
+					// set "inactive detection" timeout
+					this.timeoutHandle = setTimeout(function() {
+						me.element.style.opacity = 0.3;
+					}, 2000);
+
+				}
+		    }
+		});
+	</script>
+</dom-module>	

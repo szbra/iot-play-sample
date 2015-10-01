@@ -1,0 +1,65 @@
+<div ng-include="'app/components/play/lead/leadView.html'"></div>
+<div class="background-box"></div>
+<div class="container action-pane main">
+	<div class="row">
+		<div class="col-xs-12">
+			<a class="back-link" ui-sref="play.connect">
+				<div class="panel panel-default">
+					<div class="panel-heading panel-play">
+						<span class="step-number">1</span> <span>Select your device</span>
+						<div class="selection-check"><object data="assets/img/play-icon-check-light.svg" type="image/svg+xml" /></div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-play"><span class="step-number">2</span> <span>Enter your smartphone information</span></div>
+				<div class="panel-body">
+					<div class="container">
+						<div class="row">
+							<form class="col-xs-12 device-form">
+								<div class="form-set">
+									<h4>Smartphone name*</h4>
+									<div><input type="text" name="nameInput" class="long-input" ng-model="deviceIdInput"></div>
+									<div><small>Use a short name to uniquely identify your smartphone in the public demonstration dashboard.</small></div>
+								</div>
+								<div class="form-set">
+									<h4>Smartphone key*</h4>
+									<div><input type="password" maxlength="4" name="passwordInput" class="short-input" ng-model="passwordInput"></div>
+									<div><small>Enter a 4 digit numeric code that will act as a key for your smartphone.</small></div>
+								</div>
+								<div class="form-set">
+									<h4>Email address</h4>
+									<div><input type="text" name="emailInput" class="long-input" ng-model="emailInput"></div>
+									<div><small>Enter your email address so we can securely connect your phone when you move to the free trial.</small></div>
+								</div>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-9 col-md-10">
+							<spanc class="span-req">*required</span>
+							<hr class="device-hr">
+						</div>
+						<div class="col-xs-6 col-sm-3 col-md-2">
+							<a ui-sref="play.deviceData" class="btn btn-default next-button play" ng-click="deviceInput()" ng-if="deviceIdInput.length > 0 && passwordInput.length >= 4">Next</a>
+							<button class="btn btn-default next-button disabled" ng-if="(!deviceIdInput || !passwordInput || passwordInput.length < 4)">Next</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-disabled">
+				<div class="panel-heading"><span class="step-number">3</span> <span>View live data from your smartphone</span></div>
+				<div class="panel-body">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
