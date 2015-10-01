@@ -2,33 +2,29 @@
 
 var app = require('angular').module('iotmarket');
 
-app.service('PlayService', function(){
-
-  var _deviceId = "";
-  var _password = "";
-  var _emailAddress = "";
+app.service('PlayService', function($cookies){
 
   this.setDeviceId = function(deviceId){
-    _deviceId = deviceId;
+    $cookies.put('play.deviceid', deviceId);
   };
 
   this.getDeviceId = function(){
-    return _deviceId;
+    return $cookies.get('play.deviceid');
   };
 
   this.setEmail = function(emailAddress){
-    _emailAddress = emailAddress;
+    $cookies.put('play.email', emailAddress);
   };
 
   this.getEmail = function(){
-    return _emailAddress;
+   return $cookies.get('play.email');
   };
 
   this.setPassword = function(password){
-    _password = password;
+    $cookies.put('play.password', password);
   };
 
   this.getPassword= function(){
-    return _password;
+   return $cookies.get('play.password');
   };
 });

@@ -18,6 +18,23 @@ app.get('/iotphone/device/:deviceid', function(req,res){
 app.use('/url', urlRoute);
 app.use('/iot', iotRoute);
 
-app.listen(appEnv.port, function() {
-	console.log("server starting on " + appEnv.url);
-});
+console.log("Environment variable HTTPS: " + process.env.HTTPS);
+if (process.env.HTTPS==="true"){	
+	var fs = require('fs');
+	var options = {
+        key: fs.readFileSync('./server/config/Xmam.ibmserviceengage.com.privatekey'),
+        cert: fs.readFileSync('./server/config/mam_ibmserviceengage_com.pem'),
+        ciphers: 'ECDHE-RSA-AES256-SHA:AES256-SHA:RC4-SHA:HIGH:!RC4:!MD5:!aNULL:!EDH:!AESGCM',
+        honorCipherOrder: true
+    };
+    var httpServer = require('https').createServer(options, app);
+	app.set('port', 443);
+	httpServer.listen( app.get('port') , function() {
+		console.log('Node server listening https on port:' + app.get('port') );		
+	});	
+}else{
+	app.listen(appEnv.port, function() {
+		console.log("server starting on " + appEnv.url);
+	});	
+}
+
