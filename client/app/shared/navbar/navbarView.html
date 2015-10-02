@@ -3,7 +3,7 @@
 		!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
 	analytics.load("T4sJScTu5IQ5csPBzZthiY8NNJscIoHW");
 	analytics.page()
-	}}();	
+	}}();
 	</script>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
@@ -18,17 +18,22 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li ui-sref-active="active" id="nav-play-item" class="navbar-play active">
-						<a ui-sref="play.connect">
-							<div class="navbar-link-title">Play</div>
-							<div class="navbar-description">
-								<p>Connect a networked device to the IBM Internet of Things Foundation service in IBM Bluemix and watch live sensor data stream into a sample dashboard.</p>
-								<p>See how the IBM Internet of Things Foundation can help you build your own internet of things solution.</p>
-							</div>
-						</a>
-					</li>
+					<li ng-class="{active: stateIncludes('play')}" id="nav-play-item" class="navbar-play active"><a ui-sref="play.connect">
+						<div class="navbar-link-title">Play</div>
+						<div class="navbar-description">
+							<p>Connect a networked device to the IBM Internet of Things Foundation service in IBM Bluemix and watch live sensor data stream into a sample dashboard.</p>
+							<p>See how the IBM Internet of Things Foundation can help you build your own internet of things solution.</p>
+						</div>
+					</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 </header>
+<script>
+	$(document).ready(function () {
+	  $(".navbar-nav li a").click(function(event) {
+	    $(".navbar-collapse").collapse('hide');
+	  });
+	});
+</script>

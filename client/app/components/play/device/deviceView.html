@@ -28,12 +28,17 @@
 								</div>
 								<div class="form-set">
 									<h4>Smartphone key*</h4>
-									<div><input type="password" maxlength="4" name="passwordInput" class="short-input" ng-model="passwordInput"></div>
+									<div>
+										<input type="password" pattern="\d*" maxlength="1" name="passwordInput1" class="char-input" ng-model="passwordInput1">
+										<input type="password" pattern="\d*" maxlength="1" name="passwordInput2" class="char-input" ng-model="passwordInput2">
+										<input type="password" pattern="\d*" maxlength="1" name="passwordInput3" class="char-input" ng-model="passwordInput3">
+										<input type="password" pattern="\d*" id="last-char-input" maxlength="1" name="passwordInput4" class="char-input" ng-model="passwordInput4">
+									</div>
 									<div><small>Enter a 4 digit numeric code that will act as a key for your smartphone.</small></div>
 								</div>
 								<div class="form-set">
 									<h4>Email address</h4>
-									<div><input type="text" name="emailInput" class="long-input" ng-model="emailInput"></div>
+									<div><input type="text" id="email-input" name="emailInput" class="long-input" ng-model="emailInput"></div>
 									<div><small>Enter your email address so we can securely connect your phone when you move to the free trial.</small></div>
 								</div>
 							</ul>
@@ -44,9 +49,9 @@
 							<spanc class="span-req">*required</span>
 							<hr class="device-hr">
 						</div>
-						<div class="col-xs-6 col-sm-3 col-md-2">
-							<a ui-sref="play.deviceData" class="btn btn-default next-button play" ng-click="deviceInput()" ng-if="deviceIdInput.length > 0 && passwordInput.length >= 4">Next</a>
-							<button class="btn btn-default next-button disabled" ng-if="(!deviceIdInput || !passwordInput || passwordInput.length < 4)">Next</a>
+						<div class="col-xs-6 col-sm-3 col-md-2 button-device">
+							<a ui-sref="play.deviceData" class="btn btn-default next-button play" ng-click="deviceInput()" ng-if="deviceIdInput.length > 0 && (passwordInput1.length > 0 && passwordInput2.length > 0 && passwordInput3.length > 0 && passwordInput4.length > 0)">Next</a>
+							<button class="btn btn-default next-button disabled" ng-if="( !deviceIdInput || !passwordInput1 || !passwordInput2 || !passwordInput3 || !passwordInput4 || deviceIdInput.length < 1 || passwordInput1.length < 1 || passwordInput2.length < 1 || passwordInput3.length < 1 || passwordInput4.length < 1)">Next</a>
 						</div>
 					</div>
 				</div>
@@ -63,3 +68,24 @@
 		</div>
 	</div>
 </div>
+
+<div class="directive-footer" ng-include="'app/components/play/footer/footerView.html'"></div>
+
+<script>
+	$(".char-input").on("click", function () {
+   	$(this).select();
+	});
+	$(".char-input").keyup(function (e) {
+		var code = e.which;
+		if(code != 9) {
+	   	$(this).select();
+	    if (this.value.length == this.maxLength) {
+	      var $next = $(this).next('.char-input');
+	      if ($next.length)
+	          $(this).next('.char-input').focus();
+	      else
+	          $('#email-input').focus();
+	    }
+		}
+	});
+</script>

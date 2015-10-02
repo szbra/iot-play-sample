@@ -16,33 +16,34 @@ require('./components/play');
 
 //Define routes, views and controllers
 app.config(function($stateProvider, $urlRouterProvider) {
-
-  $urlRouterProvider.otherwise('/play');
-
-  $stateProvider
-    .state('play', {
-      abstract: true,
-      url: '/play',
-      template: '<div ui-view></div>'
+        $urlRouterProvider.otherwise('/play');
+        $stateProvider
+            .state('play', {
+                abstract: true,
+                url: '/play',
+                template: '<div ui-view></div>'
+            })
+            .state('play.connect', {
+                url: '',
+                templateUrl: 'app/components/play/connect/connectView.html',
+                controller: 'ConnectController'
+            })
+            .state('play.device', {
+                url: '/play/device',
+                templateUrl: 'app/components/play/device/deviceView.html',
+                controller: 'DeviceController'
+            })
+            .state('play.deviceData', {
+                url: '/play/devicedata',
+                templateUrl: 'app/components/play/deviceData/deviceDataView.html',
+                controller: 'DeviceDataController'
+            })
+            .state('play.deviceDataExtend', {
+                url: '/play/devicedataextend',
+                templateUrl: 'app/components/play/deviceDataExtend/deviceDataExtendView.html',
+                controller: 'DeviceDataExtendController'
+            });
     })
-    .state('play.connect', {
-      url: '',
-      templateUrl: 'app/components/play/connect/connectView.html',
-      controller: 'ConnectController'
-    })
-    .state('play.device', {
-      url: '/play/device',
-      templateUrl: 'app/components/play/device/deviceView.html',
-      controller: 'DeviceController'
-    })
-    .state('play.deviceData', {
-      url: '/play/devicedata',
-      templateUrl: 'app/components/play/deviceData/deviceDataView.html',
-      controller: 'DeviceDataController'
-    })
-    .state('play.deviceDataExtend', {
-      url: '/play/devicedataextend',
-      templateUrl: 'app/components/play/deviceDataExtend/deviceDataExtendView.html',
-      controller: 'DeviceDataExtendController'
+    .controller('MainController', function($scope, $state) {
+        $scope.stateIncludes = $state.includes;
     });
-});
