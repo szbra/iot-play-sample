@@ -19,7 +19,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/play');
     $stateProvider
       .state('play', {
-        abstract: true,
+        redirectTo: 'play.connect',
         url: '/play',
         template: '<div ui-view></div>'
       })
