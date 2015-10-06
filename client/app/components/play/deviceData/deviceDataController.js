@@ -64,9 +64,7 @@ module.exports = function($scope, LivePhoneDataService, $timeout, PlayService, S
 		$scope.accelDataPoint = livePhoneData;
 
 		// Forces angular to run its digest cycle because LivePhoneDataService's callback is fired outside of the "angular world".
-		$timeout(function() {
-			$scope.$apply();
-		}, 0);
+		$timeout(function() { $scope.$apply(); });
 
 		// clear "inactive detection" timeout
 		if (timeoutHandle) {
@@ -81,5 +79,14 @@ module.exports = function($scope, LivePhoneDataService, $timeout, PlayService, S
 
 	$scope.$on("$destroy", function() {
 		LivePhoneDataService.stopReceivingLivePhoneData();
+	});
+
+	$scope.vibrationThreshold = 10;
+	var attributeRule = document.querySelector('attribute-rule');
+	attributeRule.addEventListener('attribute-limit-updated', function(e) {
+		$scope.vibrationThreshold = e.detail.attributeLimit;
+		// Forces angular to run its digest cycle because this event will be fired by a polymer element
+		// which is outside of the "angular world".
+		$timeout(function() { $scope.$apply(); });
 	});
 };

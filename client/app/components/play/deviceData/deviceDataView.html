@@ -49,11 +49,11 @@
 									<line-chart min-value="-40" max-value="60" metadata="{{accelMetaData}}" render-data="{{accelDataPoint}}"></line-chart>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-4">
-									<line-chart min-value="0" max-value="80" metadata="{{vibrationMetaData}}" render-data="{{vibrationDataPoint}}"></line-chart>
+									<line-chart min-value="0" max-value="80" threshold="{{vibrationThreshold}}" metadata="{{vibrationMetaData}}" render-data="{{vibrationDataPoint}}"></line-chart>
 								</div>
 							</div>
 							<div class="row rules-container" ng-show="hideDeviceUrl">
-									<attribute-rule id="rule1" metadata="{{vibrationMetaData}}" payload="{{vibrationDataPoint}}"></attribute-rule>
+									<attribute-rule id="rule1" metadata="{{vibrationMetaData}}" payload="{{vibrationDataPoint}}" attribute-limit="{{vibrationThreshold}}"></attribute-rule>
 							</div>
 						</div>
 						<br>

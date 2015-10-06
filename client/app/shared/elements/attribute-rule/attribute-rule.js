@@ -21,6 +21,7 @@ Polymer({
 		attributeLimit: {
 			type: Number,
 			value: 10,
+			observer: '_observeAttributeLimit'
 		},
 		payload: {
 			type: Object,
@@ -41,6 +42,11 @@ Polymer({
 			notify: true
 		}
 	},
+	_observeAttributeLimit: function() {
+		if(this.updateAttributeLimit !== this.attributeLimit) {
+			this.updateAttributeLimit = this.attributeLimit;
+		}
+	},
 	_observePayload: function(newValue) {
 		if (newValue && this.metadata) {
 			this.payloadAttribute = newValue[this.metadata[0].field];
@@ -53,6 +59,8 @@ Polymer({
 	},
 	updateRule: function(){
 		this.attributeLimit = this.updateAttributeLimit;
+		// Fire an event to notify external code that the attribute limit has changed.
+		this.fire('attribute-limit-updated', {attributeLimit: this.attributeLimit});
 	},
 	_handleTapMinus: function() {
 		this.updateAttributeLimit-=1;
