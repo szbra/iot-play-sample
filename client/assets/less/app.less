@@ -12,9 +12,8 @@
 @color-bg-buy: rgb(115,67,151);
 @color-bg-buy-dark: rgb(65,35,86);
 @color-bg-buy-purple-thead: rgb(86,47,114);
-@color-bg-buy-purple-tr: rgb(238,210,255);
 @color-bg-buy-blue-thead: rgb(90,170,250);
-@color-bg-buy-blue-tr: rgb(192,230,255);
+@color-bg-buy-grey: rgb(224,224,224);
 @color-text-buy: rgb(57,135,225);
 @color-bg-partner: rgb(175,185,185);
 
@@ -27,12 +26,12 @@
 @color-primary-grey-mediumlight: #ebebeb;
 @color-primary-grey-light: #f3f3f3;
 @color-primary-grey-lightest: #fafcfc;
+@color-bg-footer: #f2f2f2;
 
 @bluemix-background: #26343F;
 
 @phone-width: 425px;
-@tablet-width: 750px;
-@color-bg-footer: #f2f2f2;
+@tablet-width: 768px;
 
 body {
 	font-family: "HelveticaNeue-Light", "HelveticaNeue", sans-serif;
@@ -73,16 +72,10 @@ header {
 			.navbar-description {
 				display: none;
 			}
-
 			a {
 				font-size: 13px;
 				color: @color-primary-light;
 			}
-			a:hover {
-				font-weight: bold;
-				background: inherit;
-			}
-
 			&.active, &:hover {
 				@media (min-width: @tablet-width) {
 					&.navbar-play {
@@ -259,6 +252,8 @@ header {
 }
 
 .action-pane {
+	padding-left: 80px;
+	padding-right: 80px;
 	h5 {
 		margin-top: 25px;
 		font-weight: 600;
@@ -268,7 +263,7 @@ header {
 }
 
 .main {
-	padding: 20px 30px;
+	padding: 20px 15px;
 
 	.selection-box {
 		position: relative;
@@ -614,7 +609,7 @@ header {
 	}
 	.list-try{
 		list-style-type: none;
-    margin-top: 40px;
+    margin-top: 20px;
     padding-left: 15px;
 		.message-bluexmixapp {
 		    margin-top: 12px;
@@ -632,18 +627,43 @@ header {
 	}
 	.image-iotf {
     display: inline-block;
-    width: 300px;
+		text-align: right;
+		margin-top: 20px;
+		@media (max-width: @tablet-width) {
+			text-align: center;
+		}
 		img{
 			width: 100%;
+    	max-width: 300px;
     	border: 1px solid @color-text-try;
 		}
 	}
 }
 
 .bluemix-iframe-container {
-	text-align: center;
 	background-color: @bluemix-background;
-  height: 765px !important;
+	width: 100%;
+  	height: 765px;
+	overflow: hidden;
+	h3, span {
+		color: @color-primary-light;
+	}
+	.btn-default {
+		border: 1px solid @color-primary-light;
+		color: @color-primary-light;
+		background: inherit;
+	}
+	.btn-default:hover {
+		border: 1px solid @color-primary-dark;
+		color: @color-primary-dark;
+		background: @color-primary-light;
+	}
+}
+
+.bluemix-iframe {
+	width: 100%;
+  	height: 100%;
+	text-align: center;
 }
 
 #buy-page{
@@ -653,24 +673,13 @@ header {
     line-height: 18px;
     font-weight: normal;
 	}
-	li{
-		font-size: 12px;
-    font-weight: bold;
-    padding: 6px;
-    padding-left: 25px;
-		background-repeat:no-repeat;
-    background-size: 16px;
-    background-position: 0px 10px;
-	}
 	h3{
 		font-weight: bold;
+		color: @color-bg-buy-dark;
 	}
 	table{
-		margin: 0px;
-		margin-top: 20px;
-		@media (min-width: @tablet-width) {
-			margin: 25px;
-		}
+		margin: 25px;
+		margin-top: 0px;
 		td{
 				padding: 10px;
 		}
@@ -683,29 +692,59 @@ header {
 			}
 		}
 		tr:nth-child(even) {
-				background-color:@color-bg-buy-purple-tr;
+				background-color: @color-bg-footer;
 		}
 		span, td, th{
 			font-size: 12px;
 		}
 	}
+	.buy-text-container{
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	.buy-text-margin{
+		margin-top: 20px;
+	}
+	.button-div{
+    text-align: right;
+    margin-top: 20px;
+		@media (max-width: @tablet-width) {
+	    text-align: left;
+		}
+		.next-button{
+	    width: 100%;
+	    min-width: 150px;
+	    max-width: 220px;
+		}
+	}
+	hr{
+		border-top: 1px solid @color-primary-grey-mediumlight;
+	}
+	.buy-container{
+		border: 1px solid @color-bg-buy-purple-thead;
+    margin-top: 25px;
+		overflow: auto;
+		button{
+			border: none;
+			background-image: url('../img/buy-icon-drop-purple.svg');
+	    background-color: transparent;
+	    background-repeat: no-repeat;
+	    background-position: right 30px top 25px;
+	    background-size: 17px;
+	    width: 100%;
+	    font-size: 14px;
+	    text-align: left;
+    	padding: 20px 50px 20px 25px;
+		}
+		.dropdown-menu{
+			position: relative;
+	    border: none;
+	    box-shadow: none;
+		}
+	}
 	.foundation-message-container{
-		.buy-container{
-			padding-left: 0px;
-			padding-right: 0px;
-		}
-
-		h3{
-  		color: @color-bg-buy-dark;
-		}
 		p{
 			margin-top: 20px;
-		}
-		ul{
-			margin-top: 20px;
-			li{
-				background-image: url('../img/buy-icon-check-purple.svg');
-			}
 		}
 		.btn-default{
 			border-color: @color-bg-buy-dark;
@@ -715,35 +754,25 @@ header {
 			background-color: @color-bg-buy-dark;
 			color: #FFF;
 		}
-		hr{
-      color: @color-bg-buy-dark;
-      background-color: @color-bg-buy-dark;
-      height: 1px;
-		}
 	}
 	.rti-message-container{
-		.iotf-text {
-		    margin-top: 20px;
-		}
 		table{
 			thead{
 				td{
 					background-color: @color-bg-buy-blue-thead;
 				}
 			}
-			tr:nth-child(even) {
-					background-color:@color-bg-buy-blue-tr;
-			}
 		}
 		h3{
 			color: @color-text-buy;
 		}
-		ul{
-			width:80%;
-	    margin-top: 20px;
-	    margin-bottom: 20px;
-			li{
-				background-image: url('../img/buy-icon-check-blue.svg');
+		.button-div{
+			margin-top: 15px;
+		}
+		.buy-container{
+			border-color:@color-bg-buy-blue-thead;
+			button{
+				background-image: url('../img/buy-icon-drop-blue.svg');
 			}
 		}
 		.drop-down-box{
@@ -764,18 +793,40 @@ header {
 			background-color: @color-text-buy;
 			color: #FFF;
 		}
-		hr{
-      color: @color-text-buy;
-      background-color: @color-text-buy;
-      height: 1px;
+	}
+	.upgrade-message-container{
+		.list-buy{
+			margin-top: 20px;
+			background-color: @color-bg-footer;
+	    padding: 20px 30px 10px 20px;
+	    display: inline-block;
+			@media (max-width: @tablet-width) {
+	    	display: block;
+			}
+			ul{
+				list-style-type: decimal;
+				font-size: 13px;
+	    	margin-left: 20px;
+			}
+		}
+		.img-container{
+    	text-align: right;
+    	margin-top: -43px;
+			padding-left: 40px;
+			padding-right: 0px;
+			@media (max-width: @tablet-width) {
+	    	text-align: center;
+    		margin-top: -20px;
+				padding-left: 15px;
+				padding-right: 15px
+			}
+			img{
+				width: 100%;
+	    	max-width: 500px;
+			}
 		}
 	}
-	.button-div{
-    padding: 20px 15px;
-		&.rti-button{
-			padding-left: 0px;
-		}
-	}
+
 }
 .bg-grey {
 	background: @color-bg-footer;
@@ -792,8 +843,14 @@ header {
 			}
 			.image-div{
 				margin-bottom: 40px;
+				text-align: right;
+				@media (max-width: @tablet-width) {
+					margin-top: 40px;
+					text-align: center;
+				}
 				img{
-					width: 100%;
+			    width: 100%;
+			    max-width: 420px;
 				}
 			}
 		}

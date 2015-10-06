@@ -55,6 +55,7 @@ module.exports = function($scope, LivePhoneDataService, $timeout, PlayService, S
 	}];
 
 	LivePhoneDataService.receiveLivePhoneData(deviceId, function(livePhoneData) {
+
 		$scope.hideDeviceUrl=true;
 		$scope.livePhoneData = livePhoneData;
 		$scope.vibrationDataPoint = livePhoneData;
@@ -67,7 +68,6 @@ module.exports = function($scope, LivePhoneDataService, $timeout, PlayService, S
 		$timeout(function() {
 			$scope.$apply();
 		}, 0);
-
 
 	});
 
