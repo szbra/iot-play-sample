@@ -31,7 +31,8 @@
 @bluemix-background: #26343F;
 
 @phone-width: 425px;
-@tablet-width: 768px;
+@tablet-width: 750px;
+@tablet-bootstrap-width: 768px;
 
 body {
 	font-family: "HelveticaNeue-Light", "HelveticaNeue", sans-serif;
@@ -172,6 +173,7 @@ header {
 			li {
 				a {
 					color: @color-primary-light;
+					outline: none;
 				}
 			}
 		}
@@ -191,21 +193,6 @@ header {
 	background: @color-primary-dark;
 	color: @color-primary-light;
 	background-repeat:no-repeat;
-
-	&.play-lead {
-		background-color: @color-bg-play-dark;
-		background-image: url('../img/play-bg.svg');
-	}
-
-	&.try-lead {
-		background-color: @color-bg-try-dark;
-		background-image: url('../img/try-bg.svg');
-	}
-
-	&.buy-lead {
-		background-color: @color-bg-buy-dark;
-	}
-
 	@media (max-width: @tablet-width) {
 		padding: 40px 80px 40px;
 		.lead-text {
@@ -249,11 +236,37 @@ header {
 		color: @color-primary-dark;
 		background: @color-primary-light;
 	}
+
+	&.play-lead {
+		background-color: @color-bg-play-dark;
+		background-image: url('../img/play-bg.svg');
+	}
+
+	&.try-lead {
+		background-color: @color-bg-try-dark;
+		background-image: url('../img/try-bg.svg');
+		.btn-default:hover {
+			border: 1px solid @color-bg-try-dark;
+			color: @color-bg-try-dark;
+		}
+	}
+
+	&.buy-lead {
+		background-color: @color-bg-buy-dark;
+		.btn-default:hover {
+			border: 1px solid @color-bg-buy-dark;
+			color: @color-bg-buy-dark;
+		}
+	}
 }
 
 .action-pane {
 	padding-left: 80px;
 	padding-right: 80px;
+	@media (max-width: @tablet-width) {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 	h5 {
 		margin-top: 25px;
 		font-weight: 600;
@@ -273,9 +286,14 @@ header {
 		border: 2px solid @color-primary-grey-mediumlight;
 		background-color: @color-primary-grey-lightest;
 		cursor: pointer;
-		@media only screen and (min-width:768px){
-			height: 228px;
-    }
+		@media (max-width: 900px) {
+			@media (min-width: @tablet-width) {
+				height: 260px;
+			}
+		}
+		@media (min-width: 900px) {
+			height: 230px;
+		}
 		&.selected {
 			border: 2px solid @color-primary-dark;
 			background-color: @color-primary-light;
@@ -428,7 +446,7 @@ header {
 			}
 			&.char-input{
 	    	margin-right: 5px;
-    		width: 22px;
+    		width: 25px;
 				height: 28px;
 				background: bottom left linear-gradient(#7c1b57, #7c1b57) no-repeat, bottom center linear-gradient(#7c1b57, #7c1b57) repeat-x, bottom right linear-gradient(#7c1b57, #7c1b57) no-repeat,top left linear-gradient(#CECECE, #CECECE) no-repeat, top center linear-gradient(#CECECE, #CECECE) repeat-x, top right linear-gradient(#CECECE, #CECECE) no-repeat;
 				background-size: 2px 13px, 1px 2px, 2px 13px;
@@ -836,8 +854,10 @@ header {
 	    margin-right: 5%;
 			.text-container{
 				text-align: left;
+				font-size: 21px;
 				p{
-					font-size: 12px;
+					font-size: 0.7em;
+					line-height: 1.2em;
 				}
 			}
 			.image-div{
