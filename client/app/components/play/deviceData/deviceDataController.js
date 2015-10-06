@@ -4,6 +4,8 @@ require('./../playService');
 
 module.exports = function($scope, LivePhoneDataService, $timeout, PlayService, SnipService) {
 
+	var timeoutHandle = null;
+
 	function setMobileUrl(paramDeviceId) {
 		var mobileUrl = location.hostname;
 		if (location.port) {
@@ -56,19 +58,25 @@ module.exports = function($scope, LivePhoneDataService, $timeout, PlayService, S
 
 	LivePhoneDataService.receiveLivePhoneData(deviceId, function(livePhoneData) {
 
-		$scope.hideDeviceUrl=true;
+		$scope.hideDeviceUrl = true;
 		$scope.livePhoneData = livePhoneData;
 		$scope.vibrationDataPoint = livePhoneData;
 		$scope.accelDataPoint = livePhoneData;
 
-		$(".qr-code-container").css( "display", "none" );
-		$(".graph-note").css( "display", "none" );
-		$(".rules-container").css( "display", "block" );
 		// Forces angular to run its digest cycle because LivePhoneDataService's callback is fired outside of the "angular world".
 		$timeout(function() {
 			$scope.$apply();
 		}, 0);
 
+		// clear "inactive detection" timeout
+		if (timeoutHandle) {
+			$timeout.cancel(timeoutHandle);
+		}
+
+		// set "inactive detection" timeout
+		timeoutHandle = $timeout(function() {
+			$scope.hideDeviceUrl = false;
+		}, 2000);
 	});
 
 	$scope.$on("$destroy", function() {

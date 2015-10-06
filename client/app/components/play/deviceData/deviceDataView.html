@@ -30,7 +30,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-play"><span class="step-number">3</span> <span>View live data from your smartphone</span></div>
 				<div class="panel-body">
-					<div class="qr-code-container">
+					<div class="qr-code-container" ng-hide="hideDeviceUrl">
             			<qrcode version="4" error-correction-level="M" size="100" data="{{gotoUrl}}"></qrcode>
 						<h3>{{gotoUrl}}</h3>
 					</div>
@@ -51,12 +51,12 @@
 								<line-chart min-value="0" max-value="80" metadata="{{vibrationMetaData}}" render-data="{{vibrationDataPoint}}"></line-chart>
 							</div>
 						</div>
-						<div class="row rules-container">
+						<div class="row rules-container" ng-show="hideDeviceUrl">
 	    					<attribute-rule id="rule1" metadata="{{vibrationMetaData}}" payload="{{vibrationDataPoint}}"></attribute-rule>
 						</div>
 					</div>
 					<br>
-					<span class="graph-note">Visualizations will become active when the connection has been started by using the URL above on the smartphone device.</span>
+					<span class="graph-note" ng-hide="hideDeviceUrl">Visualizations will become active when the connection has been started by using the URL above on the smartphone device.</span>
 				</div>
 
 			</div>

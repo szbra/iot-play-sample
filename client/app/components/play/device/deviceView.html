@@ -73,19 +73,29 @@
 
 <script>
 	$(".char-input").on("click", function () {
-   	$(this).select();
+	   	$(this).select();
+	});
+	var valueChanged = 0;
+	$(".char-input").keydown(function (e) {
+		if (!((e.keyCode == 190) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 46)) {
+      event.preventDefault();
+			valueChanged = 0;
+    }
+		else{
+			valueChanged = 1;
+		}
 	});
 	$(".char-input").keyup(function (e) {
 		var code = e.which;
-		if(code != 9) {
-	   	$(this).select();
-	    if (this.value.length == this.maxLength) {
-	      var $next = $(this).next('.char-input');
-	      if ($next.length)
-	          $(this).next('.char-input').focus();
-	      else
-	          $('#email-input').focus();
-	    }
+		if(code != 9 && valueChanged == 1) {
+		  $(this).select();
+		   if (this.value.length == this.maxLength) {
+		     var $next = $(this).next('.char-input');
+		     if ($next.length)
+		         $(this).next('.char-input').focus();
+		     else
+		         $('#email-input').focus();
+		   }
 		}
 	});
 </script>
