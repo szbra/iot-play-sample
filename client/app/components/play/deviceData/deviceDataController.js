@@ -37,6 +37,8 @@ module.exports = function($scope, LivePhoneDataService, $timeout, PlayService, S
 		deviceId = generateDeviceId();
 	}
 
+	$scope.deviceId = deviceId;
+
 	$scope.message = 'Your data visualized';
 	$scope.gotoLabel = 'Visit this URL on your smartphone to see live data: ';
 	setMobileUrl(deviceId);

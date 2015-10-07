@@ -25,11 +25,11 @@
 
   var client;
 
-  var iot_host; // = iot_org + ".messaging.internetofthings.ibmcloud.com";
-  var iot_port; // = 1883;
-  var iot_clientid; // = "a:" + iot_org + ":iotmktphone" + Math.floor(Math.random() * 1000);
-  var iot_username; // = "a-play-d5klyj9e74";
-  var iot_password; // = "kXXSCjIaUlAUcfTidJ";
+  var iot_host;
+  var iot_port;
+  var iot_clientid;
+  var iot_username;
+  var iot_password;
   var topic;
 
   var isConnected = false;
@@ -64,8 +64,10 @@
   function getId() {
     //window.deviceId = prompt("Enter a unique ID for your phone containing only letters and numbers:");
     window.deviceId = getParameterByName("deviceid");
+
     topic = "iot-2/type/iotphone/id/" + window.deviceId + "/evt/sensorData/fmt/json";
     console.log("Got device id = " + window.deviceId);
+
     if (window.deviceId) {
       $("#deviceId").html(window.deviceId);
       getDeviceCredentials();
@@ -95,6 +97,7 @@
         $("#msgCount").html(window.msgCount);
         console.log("[%s] Published", new Date().getTime());
       } catch (err) {
+        console.error(err);
         isConnected = false;
         changeConnectionStatusImage("/images/disconnected.svg");
         document.getElementById("connection").innerHTML = "Disconnected";
