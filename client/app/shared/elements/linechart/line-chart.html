@@ -34,6 +34,10 @@
 					type: Number,
 					value: 100
 				},
+				threshold: {
+					type: Number,
+					observer: '_processThreshold'
+				},
 				renderData: {
 					type: Object,
 					value: function() { return {}; },
@@ -106,6 +110,13 @@
 		    	}
 		    },
 
+		    // Re-render the chart every time the threshold is updated
+		    _processThreshold: function() {
+		    	if(this.initChartExecuted) {
+		    		this._render();
+		    	}
+		    },
+
 		    // Initial chart rendering based on metadata (this method can only be executed once)
 		    _initChart: function(metadata) {
 		    	// Make sure this method is executed only once
@@ -147,7 +158,7 @@
 						
 						var point = {
 							x: this.nextDataX,
-							y: (dataPoint[field] ? dataPoint[field] : 0)
+							y: ((dataPoint[field] != undefined) ? dataPoint[field] : 0)
 						};
 						this.nextDataX = this.nextDataX+1;
 
@@ -172,7 +183,8 @@
 							.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
 					// Scale the range of the data
-					this.x.domain(d3.extent(this.valuesSet[0], function(d) { return d.x; }));
+					var xDomain = d3.extent(this.valuesSet[0], function(d) { return d.x; });
+					this.x.domain(xDomain);
 					this.y.domain([this.minValue, this.maxValue]);
 
 					// Add the paths.
@@ -212,6 +224,27 @@
 								.attr("y", 5 + k * 18)
 								.text(this.metadata[k].name);
 					}	
+
+					// Draw the threshold
+					if(this.threshold != undefined) {
+						var thresholdColor = 'gray';
+						// Detect threshold crossing to change the theshold line color
+						if(this.valuesSet.length > 0) {
+							var lastValueIdx = this.valuesSet[0].length - 1;
+							for (var l = 0 ; l < this.valuesSet.length; l=l+1) {
+								if(this.valuesSet[l][lastValueIdx].y > this.threshold) {
+									thresholdColor = 'red';
+									break;
+								}
+							}
+						}
+						svg.append('line')
+		                    .attr('x1', this.x(xDomain[0]))
+		                    .attr('y1', this.y(this.threshold))
+		                    .attr('x2', this.x(xDomain[1]))
+		                    .attr('y2', this.y(this.threshold))
+		                    .style({'stroke': thresholdColor, 'fill': 'none', 'stroke-width': '2px', 'stroke-dasharray': '5 5'});
+					}
 
 					// clear "inactive detection" timeout
 					if(this.timeoutHandle) {

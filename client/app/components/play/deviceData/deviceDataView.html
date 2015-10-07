@@ -1,64 +1,66 @@
 <div ng-include="'app/components/play/lead/leadView.html'"></div>
 <div class="background-box"></div>
-<div class="container action-pane main">
-	<div class="row">
-		<div class="col-xs-12">
-			<a class="back-link" ui-sref="play.connect">
+<div class="action-pane">
+	<div class="main">
+		<div class="row">
+			<div class="col-xs-12">
+				<a class="back-link" ui-sref="play.connect">
+					<div class="panel panel-default">
+						<div class="panel-heading panel-play">
+							<span class="step-number">1</span> <span>Select your device</span>
+							<div class="selection-check"><object data="assets/img/play-icon-check-light.svg" type="image/svg+xml" /></div>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<a class="back-link" ui-sref="play.device">
+					<div ui-sref="play.device" class="panel panel-default">
+						<div class="panel-heading panel-play">
+							<span class="step-number">2</span> <span>Enter your smartphone information</span>
+							<div class="selection-check"><object data="assets/img/play-icon-check-light.svg" type="image/svg+xml" /></div>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
 				<div class="panel panel-default">
-					<div class="panel-heading panel-play">
-						<span class="step-number">1</span> <span>Select your device</span>
-						<div class="selection-check"><object data="assets/img/play-icon-check-light.svg" type="image/svg+xml" /></div>
-					</div>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<a class="back-link" ui-sref="play.device">
-				<div ui-sref="play.device" class="panel panel-default">
-					<div class="panel-heading panel-play">
-						<span class="step-number">2</span> <span>Enter your smartphone information</span>
-						<div class="selection-check"><object data="assets/img/play-icon-check-light.svg" type="image/svg+xml" /></div>
-					</div>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="panel panel-default">
-				<div class="panel-heading panel-play"><span class="step-number">3</span> <span>View live data from your smartphone</span></div>
-				<div class="panel-body">
-					<div class="qr-code-container">
-            			<qrcode version="4" error-correction-level="M" size="100" data="{{gotoUrl}}"></qrcode>
-						<h3>{{gotoUrl}}</h3>
-					</div>
-					<div class="device-text">
-						<h4>Go to this URL on your smartphone to start the connection</h4>
-						<div><small>Your smartphone device will connect to the Internet of Things Foundation service and start sending live data.</small></div>
-					</div>
-					<div class="chart-visualizations">
-						<div class="row">
-							<div class="col-xs-12 col-md-4">
-								<live-phone render-data="{{livePhoneData}}"></live-phone>
-								<!-- <live-phone render-data="livePhoneData"></live-phone> -->
+					<div class="panel-heading panel-play"><span class="step-number">3</span> <span>View live data from your smartphone</span></div>
+					<div class="panel-body">
+						<div class="qr-code-container" ng-hide="hideDeviceUrl">
+										<qrcode version="4" error-correction-level="M" size="100" data="{{gotoUrl}}"></qrcode>
+							<h3>{{gotoUrl}}</h3>
+						</div>
+						<div class="device-text">
+							<h4>Go to this URL on your smartphone to start the connection</h4>
+							<div><small>Your smartphone device will connect to the Internet of Things Foundation service and start sending live data.</small></div>
+						</div>
+						<div class="chart-visualizations">
+							<div class="row">
+								<div class="col-xs-12 col-md-4">
+									<live-phone render-data="{{livePhoneData}}"></live-phone>
+									<!-- <live-phone render-data="livePhoneData"></live-phone> -->
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4">
+									<line-chart min-value="-40" max-value="60" metadata="{{accelMetaData}}" render-data="{{accelDataPoint}}"></line-chart>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4">
+									<line-chart min-value="0" max-value="80" threshold="{{vibrationThreshold}}" metadata="{{vibrationMetaData}}" render-data="{{vibrationDataPoint}}"></line-chart>
+								</div>
 							</div>
-							<div class="col-xs-12 col-sm-6 col-md-4">
-								<line-chart min-value="-40" max-value="60" metadata="{{accelMetaData}}" render-data="{{accelDataPoint}}"></line-chart>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-4">
-								<line-chart min-value="0" max-value="80" metadata="{{vibrationMetaData}}" render-data="{{vibrationDataPoint}}"></line-chart>
+							<div class="row rules-container" ng-show="hideDeviceUrl">
+									<attribute-rule id="rule1" metadata="{{vibrationMetaData}}" payload="{{vibrationDataPoint}}" attribute-limit="{{vibrationThreshold}}"></attribute-rule>
 							</div>
 						</div>
-						<div class="row rules-container">
-	    					<attribute-rule id="rule1" metadata="{{vibrationMetaData}}" payload="{{vibrationDataPoint}}"></attribute-rule>
-						</div>
+						<br>
+						<span class="graph-note" ng-hide="hideDeviceUrl">Visualizations will become active when the connection has been started by using the URL above on the smartphone device.</span>
 					</div>
-					<br>
-					<span class="graph-note">Visualizations will become active when the connection has been started by using the URL above on the smartphone device.</span>
-				</div>
 
+				</div>
 			</div>
 		</div>
 	</div>
