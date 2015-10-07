@@ -23,6 +23,6 @@ module.exports = function($scope, $state, PlayService) {
     $scope.passwordInput = $scope.passwordInput1 + $scope.passwordInput2 + $scope.passwordInput3 + $scope.passwordInput4;
     PlayService.setPassword($scope.passwordInput);
     PlayService.setEmail($scope.emailInput);
-    $state.go("play.deviceData");
+    $state.go('play.deviceData');
   };
 };

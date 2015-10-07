@@ -13,7 +13,11 @@
 @color-bg-buy-dark: rgb(65,35,86);
 @color-bg-buy-purple-thead: rgb(86,47,114);
 @color-bg-buy-blue-thead: rgb(90,170,250);
-@color-bg-buy-grey: rgb(224,224,224);
+@color-bg-buy-dark: rgb(65,35,86);
+@color-bg-buy-purple-thead-line: #eed2ff;
+@color-bg-buy-blue-thead-line: #c0e6ff;
+@color-bg-buy-tr-line: #ececec;
+@color-bg-buy-tr: #f4f4f4;
 @color-text-buy: rgb(57,135,225);
 @color-bg-partner: rgb(175,185,185);
 
@@ -27,12 +31,10 @@
 @color-primary-grey-light: #f3f3f3;
 @color-primary-grey-lightest: #fafcfc;
 @color-bg-footer: #f2f2f2;
-
 @bluemix-background: #26343F;
 
 @phone-width: 425px;
-@tablet-width: 750px;
-@tablet-bootstrap-width: 768px;
+@tablet-width: 760px;
 
 body {
 	font-family: "HelveticaNeue-Light", "HelveticaNeue", sans-serif;
@@ -451,6 +453,7 @@ header {
 				background: bottom left linear-gradient(#7c1b57, #7c1b57) no-repeat, bottom center linear-gradient(#7c1b57, #7c1b57) repeat-x, bottom right linear-gradient(#7c1b57, #7c1b57) no-repeat,top left linear-gradient(#CECECE, #CECECE) no-repeat, top center linear-gradient(#CECECE, #CECECE) repeat-x, top right linear-gradient(#CECECE, #CECECE) no-repeat;
 				background-size: 2px 13px, 1px 2px, 2px 13px;
     		text-align: center;
+    		overflow: hidden;
 			}
 		}
 	}
@@ -535,7 +538,21 @@ header {
 		}
 	}
 }
-
+.next-tab-container{
+	margin-top: 10px;
+	.next-tab-link{
+		font-weight: normal;
+	  display: block;
+	  border-radius: 0px;
+		&:hover{
+			text-decoration: none;
+		}
+		.right-text{
+			float: right;
+			font-weight: bold;
+		}
+	}
+}
 .btn-default {
 	border-radius: 0;
 	padding: 1rem 1rem;
@@ -616,7 +633,7 @@ header {
 		font-weight: bold;
 	}
 	span 	{
-		font-size: 12px;
+		font-size: 13px;
 	}
 	.try-text-container{
 		span{
@@ -635,6 +652,7 @@ header {
 		.button-container{
 			float: left;
 	    width: 221px;
+    	margin-top: 7px;
 	    margin-right: 20px;
 		}
 	}
@@ -694,22 +712,58 @@ header {
 		font-weight: bold;
 		color: @color-bg-buy-dark;
 	}
+	.important-message{
+		font-size: 12px;
+		float: right;
+		margin-right: 25px;
+    margin-bottom: 10px;
+	}
 	table{
 		margin: 25px;
 		margin-top: 0px;
-		td{
-				padding: 10px;
+    color: #5a5a5a;
+		@media (max-width: @phone-width) {
+	    margin-left: 10px;
+    	margin-right: 10px;
 		}
-		thead{
-			td{
-				background-color: @color-bg-buy-purple-thead;
-				color: @color-primary-light;
-				padding-top: 17px;
-				padding-bottom: 17px;
+		td{
+			padding: 25px 50px;
+			@media (max-width: @tablet-width) {
+				@media (min-width: @phone-width) {
+					padding: 25px;
+				}
+			}
+			@media (max-width: @phone-width) {
+				padding: 25px 10px;
+			}
+			&:last-child{
+				@media (max-width: @phone-width) {
+					padding: 25px 5px;
+				}
 			}
 		}
-		tr:nth-child(even) {
-				background-color: @color-bg-footer;
+		thead{
+			tr{
+				background-color: @color-bg-buy-purple-thead;
+				border-bottom: 1px solid @color-bg-buy-purple-thead-line;
+				color: @color-primary-light;
+    		text-transform: uppercase;
+    		font-weight: bold;
+			}
+		}
+		tbody{
+			tr{
+				border-bottom: 1px solid @color-bg-buy-tr-line;
+				td:first-child{
+    			font-weight: bold;
+				}
+				&:nth-child(even) {
+						background-color: @color-bg-buy-tr;
+				}
+			}
+		}
+		span{
+			display: block;
 		}
 		span, td, th{
 			font-size: 12px;
@@ -740,23 +794,31 @@ header {
 	.buy-container{
 		border: 1px solid @color-bg-buy-purple-thead;
     margin-top: 25px;
-		overflow: auto;
+		overflow: hidden;
 		button{
 			border: none;
 			background-image: url('../img/buy-icon-drop-purple.svg');
 	    background-color: transparent;
 	    background-repeat: no-repeat;
-	    background-position: right 30px top 25px;
+	    background-position: right 30px top 30px;
 	    background-size: 17px;
 	    width: 100%;
-	    font-size: 14px;
+	    font-size: 19px;
 	    text-align: left;
     	padding: 20px 50px 20px 25px;
+    	color: #323232;
+			@media (max-width: @tablet-width) {
+				font-size: 15px;
+    		background-position: right 30px top 25px;
+			}
 		}
 		.dropdown-menu{
 			position: relative;
 	    border: none;
 	    box-shadow: none;
+    	padding: 0px;
+	    padding-top: 10px;
+	    margin-top: -10px;
 		}
 	}
 	.foundation-message-container{
@@ -775,8 +837,9 @@ header {
 	.rti-message-container{
 		table{
 			thead{
-				td{
+				tr{
 					background-color: @color-bg-buy-blue-thead;
+					border-bottom: 1px solid @color-bg-buy-blue-thead-line;
 				}
 			}
 		}
@@ -813,10 +876,15 @@ header {
 	}
 	.upgrade-message-container{
 		.list-buy{
+    	color: @color-bg-buy-purple-thead;
 			margin-top: 20px;
-			background-color: @color-bg-footer;
+			font-size: 19px;
+			background-color: RGBA(86,47,114,0.05);
 	    padding: 20px 30px 10px 20px;
 	    display: inline-block;
+			span{
+				color: @color-primary-text;
+			}
 			@media (max-width: @tablet-width) {
 	    	display: block;
 			}
@@ -824,6 +892,12 @@ header {
 				list-style-type: decimal;
 				font-size: 13px;
 	    	margin-left: 20px;
+				li{
+			    font-size: 19px;
+					@media (max-width: @tablet-width) {
+			    	font-size: 15px;
+					}
+				}
 			}
 		}
 		.img-container{
@@ -847,7 +921,7 @@ header {
 }
 .bg-grey {
 	background: @color-bg-footer;
-	padding: 40px 0 0 0;
+	padding: 40px 0 20px 0;
 	width: 100%;
 		.center-element{
 	    margin-left: 5%;
