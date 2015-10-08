@@ -1,3 +1,8 @@
+declared-services:
+  discover-iot-try-service:
+    label: iotf-service
+    plan: iotf-service-free
+
 applications:
 - services:
   - discover-iot-try-service
