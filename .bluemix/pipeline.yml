@@ -1,6 +1,6 @@
 --- 
 stages: 
-  - name: Build stage
+  - name: Build
     inputs: 
       - type: git
         branch: master
@@ -9,15 +9,15 @@ stages:
     jobs: 
       - name: Build
         type: builder
-  - name: Deploy Stage
+  - name: Deploy
     inputs: 
       - type: job
-        stage: Build Stage
+        stage: Build
         job: Build
     triggers: 
       - type: stage
     jobs: 
-      - name: Deploy to dev
+      - name: dev
         type: deployer
         script: |-
             #!/bin/bash
